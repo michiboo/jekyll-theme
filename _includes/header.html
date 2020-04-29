@@ -2,7 +2,7 @@
 
   <a class="navbar-brand" href="/">
     {% include opensuse.svg %}
-    <span class="navbar-title">{{ site.title_short }}</span>
+    <span class="navbar-title">{{ locale.site_title_short }}</span>
   </a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#site-menu">
@@ -24,7 +24,7 @@
             <path
               d="M16 20V4H4v15a1 1 0 0 0 1 1h11zm3 2H5a3 3 0 0 1-3-3V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v7h4v9a3 3 0 0 1-3 3zm-1-10v7a1 1 0 0 0 2 0v-7h-2zM6 6h6v6H6V6zm2 2v2h2V8H8zm-2 5h8v2H6v-2zm0 3h8v2H6v-2z" />
           </svg>
-          {{ site.messages.categories }}
+          {{ locale.categories }}
         </a>
         <div class="dropdown-menu" aria-labelledby="cat-menu-link">
           {% for category in site.categories %}
@@ -36,16 +36,41 @@
         </div>
       </li>
 
+      {% elsif link == 'locales' %}
+
+      <!-- Locales Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="locale-menu-link" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path
+              d="M5 15v2a2 2 0 0 0 1.85 1.995L7 19h3v2H7a4 4 0 0 1-4-4v-2h2zm13-5l4.4 11h-2.155l-1.201-3h-4.09l-1.199 3h-2.154L16 10h2zm-1 2.885L15.753 16h2.492L17 12.885zM8 2v2h4v7H8v3H6v-3H2V4h4V2h2zm9 1a4 4 0 0 1 4 4v2h-2V7a2 2 0 0 0-2-2h-3V3h3zM6 6H4v3h2V6zm4 0H8v3h2V6z" />
+          </svg>
+          {{ page.locale.name }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="cat-menu-link">
+          {% for ref in page.locale_siblings %}
+          <a class="dropdown-item" href="{{ ref.url | relative_url }}">
+            {{ ref.locale.name }}
+          </a>
+          {% endfor %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ site.weblate_url }}">
+            {{ locale.translate }}
+          </a>
+        </div>
+      </li>
+
       {% else %}
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ link.link }}">
+        <a class="nav-link" href="{{ link.link | prefix_locale }}">
           {% if link.icon %}
           <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
             <path d="{{ link.icon }}" />
           </svg>
           {% endif %}
-          {{ link.text }}
+          {{ locale[link.text] | default: link.text }}
         </a>
       </li>
       {% endif %}
@@ -56,7 +81,7 @@
     <!-- GitHub Search -->
     <form class="form-inline mr-md-3" action="{{ site.github_url }}/search">
       <div class="input-group">
-        <input class="form-control" type="search" name="q" placeholder="Search" lang="en">
+        <input class="form-control" type="search" name="q" placeholder="{{ locale.search }}" lang="en">
         <input type="hidden" name="l" value="Markdown">
         <input type="hidden" name="s" value="indexed">
         <div class="input-group-append">

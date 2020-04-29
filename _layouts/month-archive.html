@@ -9,13 +9,13 @@ layout: default
 				<path d="{{ site.breadcrumb_icon }}" />
 			</svg>
 			{% endif %}
-			{{ site.title_short }}
+			{{ locale.site_title_short }}
 		</a>
 	</li>
 	<li class="breadcrumb-item">
 		<a href="{{ site.baseurl }}/{{ page.date | date: '%Y' }}">{{ page.date | date: '%Y' }}</a></li>
 	<li class="breadcrumb-item active">
-		{% assign m = page.date | date: '%m' | minus: 1 %}{{ site.messages.months[m] }}
+		{{ page.date | localize_date: '%b' }}
 	</li>
 </ol>
 <div class="container">
