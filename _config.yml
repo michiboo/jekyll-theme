@@ -41,9 +41,7 @@ paginate_path: '/page/:num/'
 permalink: /:year/:month/:day/:title/
 
 jekyll-archives:
-  enabled:
-    - tags
-    - categories
+  enabled: true
   layout: 'archive'
   permalinks:
     year: '/:year/'
